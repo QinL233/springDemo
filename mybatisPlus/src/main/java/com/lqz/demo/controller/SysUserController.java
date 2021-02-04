@@ -1,10 +1,10 @@
 package com.lqz.demo.controller;
 
+import com.lqz.demo.entity.SysUser;
+import com.lqz.demo.service.SysUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lqz.demo.entity.SysUser;
-import com.lqz.demo.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
