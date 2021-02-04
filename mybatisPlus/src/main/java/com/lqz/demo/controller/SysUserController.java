@@ -1,11 +1,13 @@
 package com.lqz.demo.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lqz.demo.entity.SysUser;
 import com.lqz.demo.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 /**
  * <p>
@@ -24,5 +26,15 @@ public class SysUserController {
     @GetMapping("/list")
     public List<SysUser> list(){
         return sysUserService.list();
+    }
+
+    @GetMapping("/page")
+    public IPage<SysUser> page(@RequestParam(value = "current", defaultValue = "1") int current,
+                               @RequestParam(value = "size", defaultValue = "10") int size,
+                               @RequestBody(required = false) SysUser entity) {
+        IPage<SysUser> page = new Page<>(current, size);
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        wrapper.setEntity(entity);
+        return sysUserService.page(page, wrapper);
     }
 }
