@@ -37,9 +37,9 @@
                              targetProject="src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="sys_user"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
         </table>
     </context>
 </generatorConfiguration>

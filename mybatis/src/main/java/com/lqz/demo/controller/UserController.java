@@ -25,4 +25,5 @@ public class UserController {
     public List<SysUser> queryAll(){
         return userService.queryAll();
     }
+
 }

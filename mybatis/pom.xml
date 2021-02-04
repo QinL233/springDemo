@@ -21,7 +21,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <dependencies>
-        <!--SpringBoot通用依赖模块-->
+        <!--webmvc-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -66,11 +66,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.15</version>
         </dependency>
-        <!--mybtais plus-->
+        <!--mybatis-->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.2</version>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.4</version>
         </dependency>
     </dependencies>
 
