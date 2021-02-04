@@ -24,8 +24,10 @@ public class SysUserController {
     private  SysUserService sysUserService;
 
     @GetMapping("/list")
-    public List<SysUser> list(){
-        return sysUserService.list();
+    public List<SysUser> list(@RequestBody(required = false) SysUser entity){
+        QueryWrapper<SysUser> wrapper = new QueryWrapper<>();
+        wrapper.setEntity(entity);
+        return sysUserService.list(wrapper);
     }
 
     @GetMapping("/page")

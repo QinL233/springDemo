@@ -39,8 +39,10 @@ public class ${table.controllerName} {
     private  ${table.serviceName} ${service};
 
     @GetMapping("/list")
-    public List<${entity}> list(){
-        return ${service}.list();
+    public List<${entity}> list(@RequestBody(required = false) ${entity} entity){
+        QueryWrapper<${entity}> wrapper = new QueryWrapper<>();
+        wrapper.setEntity(entity);
+        return ${service}.list(wrapper);
     }
 
     @GetMapping("/page")
