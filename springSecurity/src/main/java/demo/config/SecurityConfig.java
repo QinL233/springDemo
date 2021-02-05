@@ -1,14 +1,18 @@
 package demo.config;
 
-import cn.hutool.json.JSONUtil;
 import demo.service.LoginService;
+import demo.utils.JwtTokenUtil;
 import demo.vo.CurrentUserDetails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +20,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,7 +29,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,10 +48,18 @@ import java.util.Objects;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+
+    @Value("${jwt.tokenHeader}")
+    private String tokenHeader;
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
     @Autowired
     private LoginService loginService;
     @Autowired
-    private JwtFilterConfig jwtFilterConfig;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -74,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 禁用缓存
         httpSecurity.headers().cacheControl();
         // 添加JWT filter
-        httpSecurity.addFilterBefore(jwtFilterConfig, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(jwtFilterConfig(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         httpSecurity.exceptionHandling()
                 .accessDeniedHandler(new AccessDeniedHandler() {
@@ -99,6 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //auth查询与加密
         auth.userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder());
     }
@@ -109,16 +127,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 加密工具类
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
      * 获取用户信息类
+     *
      * @return
      */
     @Bean
@@ -130,6 +140,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 return currentUser;
             }
             throw new UsernameNotFoundException("用户名或密码错误");
+        };
+    }
+
+    /**
+     * 加密工具类
+     *
+     * @return
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * jwt过滤器
+     *
+     * @return
+     */
+    @Bean
+    public OncePerRequestFilter jwtFilterConfig() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+                String authHeader = request.getHeader(tokenHeader);
+                if (authHeader != null && authHeader.startsWith(tokenHead)) {
+                    // The part after "Bearer "
+                    String authToken = authHeader.substring(tokenHead.length());
+                    String username = jwtTokenUtil.getUserNameFromToken(authToken);
+                    LOGGER.info("checking username:{}", username);
+                    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                        UserDetails userDetails = userDetailsService().loadUserByUsername(username);
+                        if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            LOGGER.info("authenticated user:{}", username);
+                            //配置权限信息到header
+                            SecurityContextHolder.getContext().setAuthentication(authentication);
+                        }
+                    }
+                }
+                //拦截请求
+                chain.doFilter(request, response);
+            }
         };
     }
 
