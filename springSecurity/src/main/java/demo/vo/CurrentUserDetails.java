@@ -16,9 +16,10 @@ public class CurrentUserDetails extends User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        //获取权限列表
         return this.getPermissions().stream()
                 .filter(permission -> Objects.nonNull(permission) && Objects.nonNull(permission.getId()))
-                .map(permission -> new SimpleGrantedAuthority(permission.getId()))
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toList());
     }
 

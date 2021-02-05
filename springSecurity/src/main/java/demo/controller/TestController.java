@@ -1,9 +1,9 @@
 package demo.controller;
 
 import demo.service.LoginService;
-import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,15 +24,22 @@ public class TestController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping("/test")
-    public String print(){
-        return "hello";
+    @GetMapping("/test1")
+    @PreAuthorize("hasAuthority('admin')")
+    public String test1() {
+        return "hello1";
+    }
+
+    @GetMapping("/test2")
+    @PreAuthorize("hasAuthority('admin2')")
+    public String test2() {
+        return "hello2";
     }
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response){
+    public String login(HttpServletRequest request, HttpServletResponse response) {
         String token = loginService.login();
-        response.addHeader(tokenHeader,tokenHead+token);
-        return "loginSuccess:"+token;
+        response.addHeader(tokenHeader, tokenHead + token);
+        return "loginSuccess:" + token;
     }
 }
