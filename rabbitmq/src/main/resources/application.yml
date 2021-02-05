@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+spring:
+  rabbitmq:
+    host: 192.168.119.133 # rabbitmq的连接地址
+    port: 5672 # rabbitmq的连接端口号
+    virtual-host: test3 # rabbitmq的虚拟host
+    username: test # rabbitmq的用户名
+    password: test # rabbitmq的密码
+    publisher-confirm-type: correlated # 发布确认
