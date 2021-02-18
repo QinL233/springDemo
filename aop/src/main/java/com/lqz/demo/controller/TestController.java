@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,8 +19,9 @@ public class TestController {
     private UserService userService;
 
     @ApiOperation("测试")
-    @GetMapping("/get")
-    public String get() {
+    @GetMapping("/get/{test}")
+    public String get(@PathVariable String test) {
+        System.out.println(test);
         return userService.get();
     }
 }

@@ -40,20 +40,42 @@ public class WebLogAop {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAop.class);
 
+    /**
+     * 表达式指向切入点
+     */
     @Pointcut("execution(public * com.lqz.demo.controller.*.*(..))")
     public void webLog() {
     }
 
+    /**
+     * 方法前
+     * @param joinPoint
+     * @throws Throwable
+     */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
+        System.out.println("before");
     }
 
+    /**
+     * 方法后
+     * @param ret
+     * @throws Throwable
+     */
     @AfterReturning(value = "webLog()", returning = "ret")
     public void doAfterReturning(Object ret) throws Throwable {
+        System.out.println("after");
     }
 
+    /**
+     * 环绕通知
+     * @param joinPoint
+     * @return
+     * @throws Throwable
+     */
     @Around("webLog()")
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("around");
         long startTime = System.currentTimeMillis();
         //获取当前请求对象
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
