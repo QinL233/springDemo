@@ -19,7 +19,7 @@ public class LoginService {
     private JwtTokenUtil tokenUtil;
 
     public CurrentUserDetails getCurrentUser(String username){
-        if("admin".equals(username)){
+        if(Admin.user.getUsername().equals(username)){
             return Admin.user;
         }
         return null;
