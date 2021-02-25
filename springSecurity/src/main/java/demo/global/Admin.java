@@ -13,8 +13,8 @@ public class Admin {
 
     static {
         user.setId("1");
-        user.setUsername("admin");
-        user.setPassword("admin");
+        user.setUsername("root");
+        user.setPassword("root");
         Permission permission = new Permission();
         permission.setId("1");
         permission.setName("admin");
