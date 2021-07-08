@@ -11,4 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class TaskConfig {
+
+    private String name;
 }
