@@ -20,3 +20,12 @@ spring:
 mybatis:
   mapper-locations:
     - classpath:mybatis-mapper/com/**/mapper/*.xml
+
+doris:
+  http:
+    host: 192.168.101.132
+    port: 8030
+    dbname: test
+    table: detail
+    username: root
+    password:
