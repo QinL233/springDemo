@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://192.168.101.129:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+        doris:
+          url: jdbc:mysql://192.168.101.132:9030/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+          username: root
+          password:
+          driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations:
+    - classpath:mybatis-mapper/com/**/mapper/*.xml

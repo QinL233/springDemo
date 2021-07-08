@@ -8,9 +8,5 @@ import org.springframework.stereotype.Service;
  * @date: 2021/2/5 17:26
  */
 @Service
-public class UserServiceImpl implements UserService {
-    @Override
-    public String get() {
-        return this.getClass().getName();
-    }
+public class UserServiceImpl extends AbstractUserServiceImpl{
 }

@@ -36,7 +36,7 @@ public class WebLogAop {
     /**
      * 表达式指向切入点
      */
-    @Pointcut("execution(public * com.lqz.demo.controller.*.*(..))")
+    @Pointcut("execution(public * com.lqz.demo.service.UserService.get(..))")
     public void webLog() {
     }
 
