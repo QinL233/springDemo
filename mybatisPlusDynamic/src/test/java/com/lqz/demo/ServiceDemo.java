@@ -40,7 +40,7 @@ public class ServiceDemo {
     }
 
     @Test
-    public void put(){
+    public void sendData(){
         String msg = "2021/6/1,0,万科南方,128486761,4847443537,鲲鹏-珠海红树东岸,项目词,32,3,2.36,9.38%,0.79,0,0,0,0,0\n" +
                 "2021/6/1,1,万科南方,128486761,4847443537,鲲鹏-珠海红树东岸,项目词,15,0,0,0.00%,0,0,0,0,0,0";
         try {
@@ -48,8 +48,16 @@ public class ServiceDemo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    @Test
+    public void sendCsv(){
+        String file = "D:\\project\\idea\\ksh_doc\\test.csv";
+        try {
+            dorisStreamLoad.sendCsv(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +32,9 @@ public class TestController {
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         String bucket = minioUtil.listBucketNames().get(0);
-        String filename = RandomUtil.randomNumbers(10);
+        String originalFilename = file.getOriginalFilename();
+        String type = originalFilename.substring(originalFilename.indexOf("."));
+        String filename = RandomUtil.randomNumbers(10)+type;
         minioUtil.putObject(bucket, file, filename);
         return filename;
     }
@@ -50,7 +53,21 @@ public class TestController {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buff = new byte[100];
         int rc = 0;
-        while((rc=is.read(buff, 0, 100))>0) {
+        while((rc=is.read(buff))>0) {
+            baos.write(buff, 0, rc);
+        }
+        return baos.toByteArray();
+    }
+
+    @GetMapping(value = "/file",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public byte[] file(HttpServletResponse response,@RequestParam("name") String name) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
+        String bucket = minioUtil.listBucketNames().get(0);
+        response.setHeader("Content-Disposition", "attachment; filename=" + name);
+        InputStream is = minioUtil.getObject(bucket, name);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buff = new byte[10000];
+        int rc = 0;
+        while((rc=is.read(buff))>0) {
             baos.write(buff, 0, rc);
         }
         return baos.toByteArray();
