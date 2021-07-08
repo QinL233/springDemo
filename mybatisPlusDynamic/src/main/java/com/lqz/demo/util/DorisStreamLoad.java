@@ -115,19 +115,17 @@ public class DorisStreamLoad {
     private int DORIS_HTTP_PORT;
     @Value("${doris.http.dbname}")
     private String DORIS_DB;
-    @Value("${doris.http.table}")
-    private String DORIS_TABLE;
     @Value("${doris.http.username}")
     private String DORIS_USER;
     @Value("${doris.http.password}")
     private String DORIS_PASSWORD;
 
-    public void sendData(String content) throws Exception {
+    public void sendData(String content,String table) throws Exception {
         final String loadUrl = String.format("http://%s:%s/api/%s/%s/_stream_load",
                 DORIS_HOST,
                 DORIS_HTTP_PORT,
                 DORIS_DB,
-                DORIS_TABLE);
+                table);
 
         final HttpClientBuilder httpClientBuilder = HttpClients
                 .custom()
@@ -163,12 +161,12 @@ public class DorisStreamLoad {
         }
     }
 
-    public void sendCsv(String file) throws Exception {
+    public void sendCsv(String file,String table) throws Exception {
         final String loadUrl = String.format("http://%s:%s/api/%s/%s/_stream_load",
                 DORIS_HOST,
                 DORIS_HTTP_PORT,
                 DORIS_DB,
-                DORIS_TABLE);
+                table);
 
         final HttpClientBuilder httpClientBuilder = HttpClients
                 .custom()
