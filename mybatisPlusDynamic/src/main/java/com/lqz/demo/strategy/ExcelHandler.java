@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -18,13 +17,13 @@ import java.util.Objects;
 @Import(cn.hutool.extra.spring.SpringUtil.class)
 public class ExcelHandler {
 
-    public void execute(String type, MultipartFile file){
+    public void execute(String type, MultipartFile file) {
         try {
             ReaderStrategy bean = SpringUtil.getBean(type, ReaderStrategy.class);
-            if(Objects.nonNull(bean)){
+            if (Objects.nonNull(bean)) {
                 bean.read(file);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

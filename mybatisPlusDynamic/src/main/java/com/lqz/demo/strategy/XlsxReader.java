@@ -1,16 +1,11 @@
 package com.lqz.demo.strategy;
 
-import cn.hutool.core.lang.Console;
-import cn.hutool.poi.excel.sax.Excel03SaxReader;
 import cn.hutool.poi.excel.sax.Excel07SaxReader;
 import com.lqz.demo.util.DorisStreamLoad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author liaoqinzhou_sz
@@ -28,8 +23,9 @@ public class XlsxReader implements ReaderStrategy {
     public void read(MultipartFile file) {
         try {
             StringBuilder builder = new StringBuilder();
+            long start = System.currentTimeMillis();
             new Excel07SaxReader((sheetIndex, rowIndex, rowList) -> {
-                if(rowIndex > 7){
+                if (rowIndex > 7) {
                     builder.append(rowList.get(0))
                             .append(",")
                             .append(rowList.get(16))
@@ -66,6 +62,7 @@ public class XlsxReader implements ReaderStrategy {
                             .append("\n");
                 }
             }).read(file.getInputStream(), -1);
+            System.out.println((System.currentTimeMillis()-start)+"ms");
             builder.deleteCharAt(builder.length() - 1);
             dorisStreamLoad.sendData(builder.toString(), "detail");
         } catch (Exception e) {

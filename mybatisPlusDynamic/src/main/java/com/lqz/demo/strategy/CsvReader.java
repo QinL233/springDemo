@@ -31,6 +31,7 @@ public class CsvReader implements ReaderStrategy {
             }
             StringBuilder builder = new StringBuilder();
             String str;
+            long start = System.currentTimeMillis();
             while (StrUtil.isNotBlank(str = reader.readLine())) {
                 String[] cell = str.split(",");
                 builder.append(cell[0])
@@ -68,6 +69,7 @@ public class CsvReader implements ReaderStrategy {
                         .append(cell[15])
                         .append("\n");
             }
+            System.out.println((System.currentTimeMillis()-start)+"ms");
             builder.deleteCharAt(builder.length() - 1);
             dorisStreamLoad.sendData(builder.toString(), "detail");
         }catch (Exception e){
