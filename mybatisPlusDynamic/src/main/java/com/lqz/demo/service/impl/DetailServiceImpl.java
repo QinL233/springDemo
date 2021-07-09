@@ -23,7 +23,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> implements DetailService {
-    private final DorisStreamLoad dorisStreamLoad;
 
     private final ExcelHandler excelHandler;
 
@@ -36,7 +35,7 @@ public class DetailServiceImpl extends ServiceImpl<DetailMapper, Detail> impleme
     public boolean upload(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         String type = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-        excelHandler.execute(type, file.getInputStream());
+        excelHandler.execute(type, file);
         return true;
     }
 

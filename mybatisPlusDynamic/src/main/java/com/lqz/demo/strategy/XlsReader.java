@@ -2,7 +2,6 @@ package com.lqz.demo.strategy;
 
 import cn.hutool.core.lang.Console;
 import cn.hutool.poi.excel.sax.Excel03SaxReader;
-import cn.hutool.poi.excel.sax.Excel07SaxReader;
 import com.lqz.demo.util.DorisStreamLoad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +9,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author liaoqinzhou_sz
  * @version 1.0.0
  * @Description TODO
- * @createTime 2021年07月08日 15:30:00
+ * @createTime 2021年07月08日 16:11:00
  */
-@Service("xlsx")
+@Service("xls")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class XlsxReader implements ReaderStrategy {
+public class XlsReader implements ReaderStrategy {
 
     private final DorisStreamLoad dorisStreamLoad;
 
     @Override
-    public void read(MultipartFile file) {
+    public void read(MultipartFile file){
         try {
             StringBuilder builder = new StringBuilder();
-            new Excel07SaxReader((sheetIndex, rowIndex, rowList) -> {
+            new Excel03SaxReader((sheetIndex, rowIndex, rowList) -> {
                 if(rowIndex > 7){
                     builder.append(rowList.get(0))
                             .append(",")

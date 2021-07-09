@@ -1,6 +1,6 @@
 package com.lqz.demo.strategy;
 
-import java.io.InputStream;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author liaoqinzhou_sz
@@ -9,5 +9,5 @@ import java.io.InputStream;
  * @createTime 2021年07月08日 15:33:00
  */
 public interface ReaderStrategy {
-    void read(InputStream is);
+    void read(MultipartFile file);
 }
