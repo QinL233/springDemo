@@ -25,7 +25,7 @@ public class XlsxReader implements ReaderStrategy {
             StringBuilder builder = new StringBuilder();
             long start = System.currentTimeMillis();
             new Excel07SaxReader((sheetIndex, rowIndex, rowList) -> {
-                if (rowIndex > 7) {
+                if (rowIndex > 6) {
                     builder.append(rowList.get(0))
                             .append(",")
                             .append(rowList.get(16))
