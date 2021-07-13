@@ -39,6 +39,27 @@ public class TestController {
         return filename;
     }
 
+    @PostMapping("/upload2")
+    public String upload2(@RequestParam("dir") String dir,@RequestParam("file") MultipartFile file) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
+        if(!minioUtil.bucketExists(dir)){
+            minioUtil.makeBucket(dir);
+        }
+        String originalFilename = file.getOriginalFilename();
+        String type = originalFilename.substring(originalFilename.indexOf("."));
+        String filename = RandomUtil.randomNumbers(10)+type;
+        minioUtil.putObject(dir, file, filename);
+        return filename;
+    }
+
+    @PostMapping("/upload3")
+    public String upload3(@RequestParam("dir") String dir,@RequestParam("file") MultipartFile file) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException, RegionConflictException {
+        if(!minioUtil.bucketExists(dir)){
+            minioUtil.makeBucket(dir);
+        }
+        minioUtil.putObject(dir, file, file.getOriginalFilename());
+        return file.getOriginalFilename();
+    }
+
     @PostMapping("/remove")
     public boolean remove(@RequestParam("name") String name) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         String bucket = minioUtil.listBucketNames().get(0);

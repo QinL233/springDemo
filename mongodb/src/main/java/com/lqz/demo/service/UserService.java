@@ -16,17 +16,18 @@ public class UserService {
     @Autowired
     private MgUserRepository userRepository;
 
-    public String add(UserModel userModel){
+    public String add(UserModel userModel) {
         userModel.setId(System.currentTimeMillis());
         UserModel rs = userRepository.save(userModel);
         return rs.getId().toString();
     }
 
-    public UserModel get(Long id){
+    public UserModel get(Long id) {
         Optional<UserModel> userModel = userRepository.findById(id);
-        if(userModel.isPresent()){
+        if (userModel.isPresent()) {
             return userModel.get();
         }
         return null;
     }
+
 }
