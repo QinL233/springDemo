@@ -5,3 +5,13 @@ spring:
     mongodb:
       host: localhost
       port: 27017
+
+mongo:
+  uri: mongodb://localhost:27017/demo
+  database: test
+  #socketKeepAlive: false
+  threadsAllowed: 10
+  connectionsPerHost: 50
+  maxWaitTime: 60000
+  connectTimeout: 20000
+  socketTimeout: 20000

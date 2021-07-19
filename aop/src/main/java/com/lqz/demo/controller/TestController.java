@@ -21,7 +21,11 @@ public class TestController {
     @ApiOperation("测试")
     @GetMapping("/get/{test}")
     public String get(@PathVariable String test) {
-        System.out.println(test);
         return userService.get();
+    }
+    @ApiOperation("测试2")
+    @GetMapping("/query/{test}")
+    public String query(@PathVariable String test) {
+        return userService.query();
     }
 }

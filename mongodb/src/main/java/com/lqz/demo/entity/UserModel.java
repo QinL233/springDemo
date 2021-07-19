@@ -1,11 +1,13 @@
 package com.lqz.demo.entity;
 
 
+import dev.morphia.annotations.Entity;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.util.List;
 
+//@Entity("userModel")
 public class UserModel implements Serializable {
 
     private static final long serialVersionUID = 6320548148250372657L;

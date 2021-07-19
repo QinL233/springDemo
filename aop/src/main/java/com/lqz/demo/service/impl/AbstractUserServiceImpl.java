@@ -19,4 +19,9 @@ public class AbstractUserServiceImpl implements UserService {
     public String get() {
         return testService.get();
     }
+
+    @Override
+    public String query() {
+        return get();
+    }
 }
