@@ -29,7 +29,7 @@ public class Generator {
             /** 如果表定义记录创建，记录修改，逻辑删除字段 **/
 //            gmtCreated = "gmt_create", gmtModified = "gmt_modified", logicDeleted = "is_deleted",
             /** 需要生成文件的表 **/
-            tables = @Table(value = {"data_sign_order_detail_temp"})
+            tables = @Table(value = {"data_dept"})
     )
     static class Abc {
     }

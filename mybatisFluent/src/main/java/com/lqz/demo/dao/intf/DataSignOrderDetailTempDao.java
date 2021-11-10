@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface DataSignOrderDetailTempDao extends IBaseDao<DataSignOrderDetailTempEntity> {
 
-    List<SumByDeptWithSign> sum();
+    List<SumByDeptWithSign> sumDept();
 }

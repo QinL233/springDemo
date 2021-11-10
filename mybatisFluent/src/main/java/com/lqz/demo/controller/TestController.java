@@ -29,6 +29,6 @@ public class TestController {
 
     @GetMapping("/sum")
     public List<SumByDeptWithSign> sum() {
-        return dataSignOrderDetailTempDao.sum();
+        return dataSignOrderDetailTempDao.sumDept();
     }
 }

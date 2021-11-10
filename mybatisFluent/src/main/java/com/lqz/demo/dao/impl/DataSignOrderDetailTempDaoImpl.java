@@ -16,8 +16,9 @@ import java.util.List;
  */
 @Repository
 public class DataSignOrderDetailTempDaoImpl extends DataSignOrderDetailTempBaseDao implements DataSignOrderDetailTempDao {
+
     @Override
-    public List<SumByDeptWithSign> sum() {
+    public List<SumByDeptWithSign> sumDept() {
         return super.listPoJos(SumByDeptWithSign.class,
                 super.query()
                         .select
