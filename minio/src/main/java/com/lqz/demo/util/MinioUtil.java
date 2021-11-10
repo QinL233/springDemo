@@ -163,7 +163,6 @@ public class MinioUtil {
      * @param fileName   File name
      * @return
      */
-
     public boolean putObject(String bucketName, String objectName, String fileName) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, ErrorResponseException, XmlParserException, InvalidBucketNameException, InsufficientDataException, InternalException {
         boolean flag = bucketExists(bucketName);
         if (flag) {
@@ -174,7 +173,6 @@ public class MinioUtil {
             }
         }
         return false;
-
     }
 
     /**

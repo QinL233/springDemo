@@ -34,7 +34,7 @@ public class TestController {
         String bucket = minioUtil.listBucketNames().get(0);
         String originalFilename = file.getOriginalFilename();
         String type = originalFilename.substring(originalFilename.indexOf("."));
-        String filename = RandomUtil.randomNumbers(10)+type;
+        String filename = "get/"+RandomUtil.randomNumbers(10)+type;
         minioUtil.putObject(bucket, file, filename);
         return filename;
     }
@@ -83,7 +83,8 @@ public class TestController {
     @GetMapping(value = "/file",produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public byte[] file(HttpServletResponse response,@RequestParam("name") String name) throws IOException, InvalidResponseException, InvalidKeyException, NoSuchAlgorithmException, InternalException, XmlParserException, InvalidBucketNameException, InsufficientDataException, ErrorResponseException {
         String bucket = minioUtil.listBucketNames().get(0);
-        response.setHeader("Content-Disposition", "attachment; filename=" + name);
+        String fileName = name.substring(name.lastIndexOf("/")+1);
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
         InputStream is = minioUtil.getObject(bucket, name);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buff = new byte[10000];

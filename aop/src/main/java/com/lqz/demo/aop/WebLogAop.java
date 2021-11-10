@@ -59,6 +59,7 @@ public class WebLogAop {
      */
     @AfterReturning(value = "webLog()", returning = "ret")
     public void doAfterReturning(Object ret) throws Throwable {
+        System.out.println(ret);
         System.out.println("after");
     }
 

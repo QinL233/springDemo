@@ -18,4 +18,13 @@ public class Entity {
     @NotEmpty：被注释的属性不能为空；
     @Email：被注释的属性必须符合邮箱格式。
      */
+
+    private String user_name;
+
+    @Override
+    public String toString() {
+        return "Entity{" +
+                "user_name='" + user_name + '\'' +
+                '}';
+    }
 }

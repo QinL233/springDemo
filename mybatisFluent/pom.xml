@@ -66,6 +66,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
+        <!--mybatis-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.0</version>
+        </dependency>
         <!--Mysql数据库驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -77,14 +83,13 @@
         <dependency>
             <groupId>com.github.atool</groupId>
             <artifactId>fluent-mybatis</artifactId>
-            <version>1.5.7</version>
+            <version>1.8.7</version>
         </dependency>
         <!-- 引入fluent-mybatis-processor, scope设置为provider 编译需要，运行时不需要 -->
         <dependency>
             <groupId>com.github.atool</groupId>
             <artifactId>fluent-mybatis-processor</artifactId>
-            <scope>provided</scope>
-            <version>1.5.7</version>
+            <version>1.8.7</version>
         </dependency>
 
         <!--集成druid连接池-->
@@ -93,6 +98,19 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.21</version>
         </dependency>
+
+        <!--Swagger-UI API文档生产工具-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
         <!--lombok编程-->
         <dependency>
             <groupId>org.projectlombok</groupId>
