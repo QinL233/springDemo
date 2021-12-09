@@ -4,6 +4,6 @@ server:
 spring:
   elasticsearch:
     rest:
-      uris: http://192.168.119.133:9200
+      uris: http://192.168.101.136:9200
       read-timeout: 30s
       connection-timeout: 10s
