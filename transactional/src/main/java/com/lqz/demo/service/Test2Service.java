@@ -11,6 +11,6 @@ import com.lqz.demo.entity.Test2;
  * @author liaoQinZhou
  * @since 2022-04-06
  */
-public interface Test2Service extends IService<Test2>, RequestService {
+public interface Test2Service extends IService<Test2>, RequiredService {
 
 }

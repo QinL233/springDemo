@@ -41,29 +41,29 @@ public class Test2Controller {
         return test2Service.page(page, wrapper);
     }
 
-    @PostMapping("/request1")
-    public Boolean request1(@RequestBody Test2 entity) {
-        return test2Service.request1(entity);
+    @PostMapping("/required1")
+    public Boolean required1(@RequestBody Test2 entity) {
+        return test2Service.required1(entity);
     }
 
-    @PostMapping("/request2")
-    public Boolean request2(@RequestBody Test2 entity) {
-        return test2Service.request2(entity);
+    @PostMapping("/required2")
+    public Boolean required2(@RequestBody Test2 entity) {
+        return test2Service.required2(entity);
     }
 
-    @PostMapping("/request3")
-    public Boolean request3(@RequestBody Test2 entity) {
-        return test2Service.request3(entity);
+    @PostMapping("/required3")
+    public Boolean required3(@RequestBody Test2 entity) {
+        return test2Service.required3(entity);
     }
 
-    @PostMapping("/request4")
-    public Boolean request4(@RequestBody Test2 entity) {
-        return test2Service.request4(entity);
+    @PostMapping("/required4")
+    public Boolean required4(@RequestBody Test2 entity) {
+        return test2Service.required4(entity);
     }
 
-    @PostMapping("/request5")
-    public Boolean request5(@RequestBody Test2 entity) {
-        return test2Service.request5(entity);
+    @PostMapping("/required5")
+    public Boolean required5(@RequestBody Test2 entity) {
+        return test2Service.required5(entity);
     }
 
 }

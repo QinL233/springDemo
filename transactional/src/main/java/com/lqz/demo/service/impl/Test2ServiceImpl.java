@@ -20,13 +20,13 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
 
     /**
      * 默认事务
-     * 隔离界别：request
+     * 隔离界别：required
      *
      * @param test2
      * @return
      */
     @Override
-    public Boolean request1(Test2 test2) {
+    public Boolean required1(Test2 test2) {
         save(test2);
         return true;
     }
@@ -38,7 +38,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
      * @return
      */
     @Override
-    public Boolean request2(Test2 test2) {
+    public Boolean required2(Test2 test2) {
         save(test2);
         int i = 1 / 0;
         return true;
@@ -51,8 +51,8 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
      * @return
      */
     @Override
-    public Boolean request3(Test2 test2) {
-        return request2(test2);
+    public Boolean required3(Test2 test2) {
+        return required2(test2);
     }
 
     /**
@@ -62,8 +62,8 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
      * @return
      */
     @Override
-    public Boolean request4(Test2 test2) {
-        return request2(test2);
+    public Boolean required4(Test2 test2) {
+        return required2(test2);
     }
 
     /**
@@ -73,7 +73,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
      * @return
      */
     @Override
-    public Boolean request5(Test2 test2) {
+    public Boolean required5(Test2 test2) {
         Test2ServiceImpl service = Test2ServiceImpl.class.cast(AopContext.currentProxy());
         return service.save(test2);
     }
