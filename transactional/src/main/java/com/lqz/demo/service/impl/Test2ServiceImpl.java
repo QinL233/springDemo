@@ -80,7 +80,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     @Override
     public Boolean required5(Test2 test2) {
         Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
-        return service.save(test2);
+        return service.required2(test2);
     }
 
     /**
@@ -146,8 +146,8 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     }
 
     /**
-     * 本身无事务，直接调用事务
-     *
+     * 本身无事务，直接调用事务会导致事务失效，但是使用代理方法会触发事务
+     * 而事务mandatory本身强制上游必须有事务，因此调用失败
      * @param test2
      * @return
      */
