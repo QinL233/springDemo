@@ -4,7 +4,7 @@ import com.lqz.demo.entity.Test2;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 事务：默认隔离级别-required
+ * 事务：默认隔离级别-required，上下游皆相互影响
  * 以方法入口的角度如果存在一个事务，则支持当前事务。如果没有事务则开启一个新的事务
  * 必须是走spring代理对象才可以实现（方法直接内部调用，或非spring实例对象调用都不生效）
  *

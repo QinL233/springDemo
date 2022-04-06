@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 单独事务
+ * 单独事务，强调上游不影响我，而我影响上游
  * 1、单独使用时当作一个事务使用
  * 2、被调用时，上游方法不影响当前事务本身
  * 3、被调用时，触发异常影响上游事务

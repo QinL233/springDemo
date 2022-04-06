@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * 单独无事务，强调上下游皆不会现胡影响
  * @author liaoqinzhou_sz
  * @version 1.0.0
  * @Description TODO

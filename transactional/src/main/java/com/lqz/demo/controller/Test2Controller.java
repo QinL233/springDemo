@@ -140,4 +140,18 @@ public class Test2Controller {
     public Boolean notSupported4(@RequestBody Test2 entity) {
         return test2Service.notSupported4(entity);
     }
+
+    @PostMapping("/never1")
+    public Boolean never1(@RequestBody Test2 entity) {
+        return test2Service.never1(entity);
+    }
+
+    @PostMapping("/never2")
+    public Boolean never2(@RequestBody Test2 entity) {
+        return test2Service.never2(entity);
+    }
+    @PostMapping("/never3")
+    public Boolean never3(@RequestBody Test2 entity) {
+        return test2Service.never3(entity);
+    }
 }
