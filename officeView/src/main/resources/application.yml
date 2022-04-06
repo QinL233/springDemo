@@ -1,0 +1,16 @@
+server:
+  port: 8100
+
+
+jodconverter:
+  local:
+    enabled: true
+
+view:
+  file:
+    path: D:/temp/view
+
+spring:
+  mvc:
+    view:
+      suffix: .html
