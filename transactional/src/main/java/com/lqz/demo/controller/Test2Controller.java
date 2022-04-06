@@ -120,4 +120,24 @@ public class Test2Controller {
     public Boolean requiresNew4(@RequestBody Test2 entity) {
         return test2Service.requiresNew4(entity);
     }
+
+    @PostMapping("/notSupported1")
+    public Boolean notSupported1(@RequestBody Test2 entity) {
+        return test2Service.notSupported1(entity);
+    }
+
+    @PostMapping("/notSupported2")
+    public Boolean notSupported2(@RequestBody Test2 entity) {
+        return test2Service.notSupported2(entity);
+    }
+
+    @PostMapping("/notSupported3")
+    public Boolean notSupported3(@RequestBody Test2 entity) {
+        return test2Service.notSupported3(entity);
+    }
+
+    @PostMapping("/notSupported4")
+    public Boolean notSupported4(@RequestBody Test2 entity) {
+        return test2Service.notSupported4(entity);
+    }
 }

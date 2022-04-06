@@ -74,14 +74,16 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     /**
      * 事务生效、回滚成功
      * 方法无事务，获取代理对象调用方法生效
-     *
+     * 上游方法会影响到下游的事务
      * @param test2
      * @return
      */
     @Override
     public Boolean required5(Test2 test2) {
         Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
-        return service.required2(test2);
+        service.required1(test2);
+        int i=1/0;
+        return true;
     }
 
     /**
@@ -217,6 +219,11 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
         return true;
     }
 
+    /**
+     * 事务生效，下游对上游的影响不取绝上游是否有事务
+     * @param test2
+     * @return
+     */
     @Override
     public Boolean requiresNew4(Test2 test2) { save(test2);
         //插入成功，作为单独一个事务
@@ -226,6 +233,62 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
         //异常事务，抛出异常导致上游事务触发回滚
         test2.setId(test2.getId()+1);
         service.requiresNew2(test2);
+        return true;
+    }
+
+    /**
+     * 事务生效，状态为不回滚
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean notSupported1(Test2 test2) {
+        save(test2);
+        int i = 1/0;
+        return true;
+    }
+
+    /**
+     * 事务生效，下游事务不影响上游
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean notSupported2(Test2 test2) {
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        return service.notSupported1(test2);
+    }
+
+    /**
+     * 事务生效，上游触发回滚，下游不触发
+     * 下游事务不取决于上游是否有事务，且不取绝上游是否报错
+     *
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean notSupported3(Test2 test2) {
+        save(test2);
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId()+1);
+        service.notSupported1(test2);
+        int i =1/0;
+        return true;
+    }
+
+    /**
+     * 事务生效，上下游都不回滚
+     *
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean notSupported4(Test2 test2) {
+        save(test2);
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId()+1);
+        service.notSupported1(test2);
+        int i =1/0;
         return true;
     }
 }
