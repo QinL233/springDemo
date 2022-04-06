@@ -86,4 +86,18 @@ public class Test2Controller {
         return test2Service.supports4(entity);
     }
 
+    @PostMapping("/mandatory1")
+    public Boolean mandatory1(@RequestBody Test2 entity) {
+        return test2Service.mandatory1(entity);
+    }
+
+    @PostMapping("/mandatory2")
+    public Boolean mandatory2(@RequestBody Test2 entity) {
+        return test2Service.mandatory2(entity);
+    }
+
+    @PostMapping("/mandatory3")
+    public Boolean mandatory3(@RequestBody Test2 entity) {
+        return test2Service.mandatory3(entity);
+    }
 }

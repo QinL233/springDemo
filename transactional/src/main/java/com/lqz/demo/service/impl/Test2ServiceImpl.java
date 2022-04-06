@@ -5,6 +5,7 @@ import com.lqz.demo.entity.Test2;
 import com.lqz.demo.mapper.Test2Mapper;
 import com.lqz.demo.service.Test2Service;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -78,25 +79,27 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
      */
     @Override
     public Boolean required5(Test2 test2) {
-        Test2ServiceImpl service = Test2ServiceImpl.class.cast(AopContext.currentProxy());
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
         return service.save(test2);
     }
 
     /**
      * supports 表示支持事务执行，即根据上游方法判断该方法是否使用事务
      * 单独执行无事务，被事务调用时则根据事务来
+     *
      * @param test2
      * @return
      */
     @Override
     public Boolean supports1(Test2 test2) {
         save(test2);
-        int i = 1/0;
+        int i = 1 / 0;
         return true;
     }
 
     /**
      * 事务生效，回滚成功
+     *
      * @param test2
      * @return
      */
@@ -108,6 +111,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     /**
      * 事务失效，错误插入
      * support初始状态当作无事务使用，需要上游决定
+     *
      * @param test2
      * @return
      */
@@ -119,11 +123,48 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     /**
      * 事务生效，回滚成功
      * 嵌套事务，required存在事务，向下调用包含事务
+     *
      * @param test2
      * @return
      */
     @Override
     public Boolean supports4(Test2 test2) {
         return supports3(test2);
+    }
+
+    /**
+     * 事务生效，回滚成功
+     *
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean mandatory1(Test2 test2) {
+        save(test2);
+        int i = 1 / 0;
+        return true;
+    }
+
+    /**
+     * 本身无事务，直接调用事务
+     *
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean mandatory2(Test2 test2) {
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        return service.mandatory1(test2);
+    }
+
+    /**
+     * 事务生效，回滚成功
+     *
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean mandatory3(Test2 test2) {
+        return mandatory1(test2);
     }
 }

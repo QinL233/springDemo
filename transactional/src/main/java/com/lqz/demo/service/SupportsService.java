@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ *
+ * 本身不带事务，由上游决定是否该方法是否使用事务
  * @author liaoqinzhou_sz
  * @version 1.0.0
  * @Description TODO
