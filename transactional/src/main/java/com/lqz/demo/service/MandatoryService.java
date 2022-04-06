@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * mandatory 强制事务
- *
+ * 强制上游调用该方法时必须触发事务（如果直接内部调用则无效）
  * @author liaoqinzhou_sz
  * @version 1.0.0
  * @Description TODO

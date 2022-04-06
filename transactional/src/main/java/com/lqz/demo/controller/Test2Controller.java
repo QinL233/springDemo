@@ -100,4 +100,19 @@ public class Test2Controller {
     public Boolean mandatory3(@RequestBody Test2 entity) {
         return test2Service.mandatory3(entity);
     }
+
+    @PostMapping("/requiresNew1")
+    public Boolean requiresNew1(@RequestBody Test2 entity) {
+        return test2Service.requiresNew1(entity);
+    }
+
+    @PostMapping("/requiresNew2")
+    public Boolean requiresNew2(@RequestBody Test2 entity) {
+        return test2Service.requiresNew2(entity);
+    }
+
+    @PostMapping("/requiresNew3")
+    public Boolean requiresNew3(@RequestBody Test2 entity) {
+        return test2Service.requiresNew3(entity);
+    }
 }
