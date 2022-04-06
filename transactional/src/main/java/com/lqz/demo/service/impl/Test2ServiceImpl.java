@@ -6,6 +6,7 @@ import com.lqz.demo.mapper.Test2Mapper;
 import com.lqz.demo.service.Test2Service;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 /**
  * <p>
@@ -333,5 +334,77 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     public Boolean never3(Test2 test2) {
         Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
         return service.never1(test2);
+    }
+
+    /**
+     * 事务生效
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean nested1(Test2 test2) {
+        save(test2);
+        return true;
+    }
+
+    /**
+     * 单独使用事务生效
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean nested2(Test2 test2) {
+        save(test2);
+        int i = 1 / 0;
+        return true;
+    }
+
+    /**
+     * 无事务的方法调用时，外部不影响内部
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean nested3(Test2 test2) {
+        save(test2);
+
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId() + 1);
+        service.nested1(test2);
+
+        int i = 1/0;
+        return true;
+    }
+
+    /**
+     * 无事务调用时，内外部都不干涉
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean nested4(Test2 test2) {
+        save(test2);
+
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId() + 1);
+        service.nested2(test2);
+        return true;
+    }
+
+    /**
+     * 事务调用时，合并为一个事务
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean nested5(Test2 test2) {
+        save(test2);
+
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId() + 1);
+        service.nested1(test2);
+
+        int i=1/0;
+        return true;
     }
 }

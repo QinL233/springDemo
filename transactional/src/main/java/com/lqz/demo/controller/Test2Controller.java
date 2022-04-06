@@ -150,8 +150,34 @@ public class Test2Controller {
     public Boolean never2(@RequestBody Test2 entity) {
         return test2Service.never2(entity);
     }
+
     @PostMapping("/never3")
     public Boolean never3(@RequestBody Test2 entity) {
         return test2Service.never3(entity);
+    }
+
+    @PostMapping("/nested1")
+    public Boolean nested1(@RequestBody Test2 entity) {
+        return test2Service.nested1(entity);
+    }
+
+    @PostMapping("/nested2")
+    public Boolean nested2(@RequestBody Test2 entity) {
+        return test2Service.nested2(entity);
+    }
+
+    @PostMapping("/nested3")
+    public Boolean nested3(@RequestBody Test2 entity) {
+        return test2Service.nested3(entity);
+    }
+
+    @PostMapping("/nested4")
+    public Boolean nested4(@RequestBody Test2 entity) {
+        return test2Service.nested4(entity);
+    }
+
+    @PostMapping("/nested5")
+    public Boolean nested5(@RequestBody Test2 entity) {
+        return test2Service.nested5(entity);
     }
 }
