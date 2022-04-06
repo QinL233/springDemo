@@ -66,4 +66,24 @@ public class Test2Controller {
         return test2Service.required5(entity);
     }
 
+    @PostMapping("/supports1")
+    public Boolean supports1(@RequestBody Test2 entity) {
+        return test2Service.supports1(entity);
+    }
+
+    @PostMapping("/supports2")
+    public Boolean supports2(@RequestBody Test2 entity) {
+        return test2Service.supports2(entity);
+    }
+
+    @PostMapping("/supports3")
+    public Boolean supports3(@RequestBody Test2 entity) {
+        return test2Service.supports3(entity);
+    }
+
+    @PostMapping("/supports4")
+    public Boolean supports4(@RequestBody Test2 entity) {
+        return test2Service.supports4(entity);
+    }
+
 }

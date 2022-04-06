@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements Test2Service {
 
     /**
-     * 默认事务
+     * 事务生效，插入成功
      * 隔离界别：required
      *
      * @param test2
@@ -32,6 +32,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     }
 
     /**
+     * 事务生效，回滚成功
      * 默认事务，错误回滚
      *
      * @param test2
@@ -45,6 +46,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     }
 
     /**
+     * 事务无效、错误插入
      * 方法无事务，调用事务方法不生效
      *
      * @param test2
@@ -56,6 +58,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     }
 
     /**
+     * 事务生效，回滚成功
      * 方法有事务，调用事务生效
      *
      * @param test2
@@ -67,6 +70,7 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     }
 
     /**
+     * 事务生效、回滚成功
      * 方法无事务，获取代理对象调用方法生效
      *
      * @param test2
@@ -76,5 +80,50 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
     public Boolean required5(Test2 test2) {
         Test2ServiceImpl service = Test2ServiceImpl.class.cast(AopContext.currentProxy());
         return service.save(test2);
+    }
+
+    /**
+     * supports 表示支持事务执行，即根据上游方法判断该方法是否使用事务
+     * 单独执行无事务，被事务调用时则根据事务来
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean supports1(Test2 test2) {
+        save(test2);
+        int i = 1/0;
+        return true;
+    }
+
+    /**
+     * 事务生效，回滚成功
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean supports2(Test2 test2) {
+        return supports1(test2);
+    }
+
+    /**
+     * 事务失效，错误插入
+     * support初始状态当作无事务使用，需要上游决定
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean supports3(Test2 test2) {
+        return supports2(test2);
+    }
+
+    /**
+     * 事务生效，回滚成功
+     * 嵌套事务，required存在事务，向下调用包含事务
+     * @param test2
+     * @return
+     */
+    @Override
+    public Boolean supports4(Test2 test2) {
+        return supports3(test2);
     }
 }
