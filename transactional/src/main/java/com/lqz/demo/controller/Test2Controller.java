@@ -115,4 +115,9 @@ public class Test2Controller {
     public Boolean requiresNew3(@RequestBody Test2 entity) {
         return test2Service.requiresNew3(entity);
     }
+
+    @PostMapping("/requiresNew4")
+    public Boolean requiresNew4(@RequestBody Test2 entity) {
+        return test2Service.requiresNew4(entity);
+    }
 }

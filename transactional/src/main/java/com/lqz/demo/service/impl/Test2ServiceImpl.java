@@ -216,4 +216,16 @@ public class Test2ServiceImpl extends ServiceImpl<Test2Mapper, Test2> implements
         service.requiresNew2(test2);
         return true;
     }
+
+    @Override
+    public Boolean requiresNew4(Test2 test2) { save(test2);
+        //插入成功，作为单独一个事务
+        Test2Service service = Test2Service.class.cast(AopContext.currentProxy());
+        test2.setId(test2.getId()+1);
+        service.requiresNew1(test2);
+        //异常事务，抛出异常导致上游事务触发回滚
+        test2.setId(test2.getId()+1);
+        service.requiresNew2(test2);
+        return true;
+    }
 }
