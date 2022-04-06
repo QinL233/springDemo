@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lqz.demo.mapper.Test2Mapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lqz.demo.entity.Test2">
+        <id column="id" property="id" />
+        <result column="s1" property="s1" />
+        <result column="s2" property="s2" />
+        <result column="s3" property="s3" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, s1, s2, s3
+    </sql>
+
+</mapper>
